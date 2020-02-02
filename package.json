@@ -1,0 +1,24 @@
+{
+  "name": "cardGame",
+  "version": "1.0.0",
+  "description": "",
+  "main": "deck.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watchAll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kylebustard/cardGame.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kylebustard/cardGame/issues"
+  },
+  "homepage": "https://github.com/kylebustard/cardGame#readme",
+  "devDependencies": {
+    "jest": "^25.1.0"
+  }
+}
