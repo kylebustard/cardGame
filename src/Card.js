@@ -1,6 +1,6 @@
 class Card {
-  constructor(suite, rank, value) {
-    this.suite = suite;
+  constructor(suit, rank, value) {
+    this.suit = suit;
     this.rank = rank;
     this.value = value;
   }
