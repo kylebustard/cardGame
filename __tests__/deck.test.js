@@ -1,61 +1,82 @@
 const Deck = require('../src/Deck');
 
 describe('Given a deck of playing cards', () => {
-  const deck = new Deck();
-  deck.create();
+  const deck = new Deck().create();
 
-  function _propSetInDeck(cards, prop, propSize) {
-    const propSet = new Set();
-    let i = 0;
-    while (propSet.size < propSize) {
-      if (!propSet.has(cards[i][prop])) {
-        propSet.add(cards[i][prop]);
+  describe('When the deck is created', () => {
+    function _propSetInDeck(cards, prop, propSize) {
+      const propSet = new Set();
+      let i = 0;
+      while (propSet.size < propSize) {
+        const elementInProperty = cards[i][prop];
+        if (!propSet.has(elementInProperty)) {
+          propSet.add(elementInProperty);
+        }
+        i++;
       }
-      i++;
-    }
-    return propSet;
-  }
-
-  it('should have the 4 suits', () => {
-    const expectedSuits = new Set(['Spades', 'Clubs', 'Diamonds', 'Hearts']);
-    const collectSuitsInDeck = _propSetInDeck(deck.cards, 'suit', 4);
-
-    expect(expectedSuits).toEqual(collectSuitsInDeck);
-  });
-
-  it('should have the 13 ranks', () => {
-    const expectedRanks = new Set([
-      'Ace',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '10',
-      'Jack',
-      'King',
-      'Queen'
-    ]);
-    const collectRanksInDeck = _propSetInDeck(deck.cards, 'rank', 13);
-
-    expect(expectedRanks).toEqual(collectRanksInDeck);
-  });
-
-  it('should have a range of values 1..13', () => {
-    const expectedRange = [1, 13];
-    function getRange(cards) {
-      let low = Infinity;
-      let high = -Infinity;
-      for (const card of cards) {
-        if (card.value < low) low = card.value;
-        if (card.value > high) high = card.value;
-      }
-      return [low, high];
+      return propSet;
     }
 
-    expect(expectedRange).toEqual(getRange(deck.cards));
+    it('should have the 4 suits', () => {
+      const expectedSuits = new Set(['Spades', 'Clubs', 'Diamonds', 'Hearts']);
+      const suitsInDeck = _propSetInDeck(deck.cards, 'suit', 4);
+
+      expect(expectedSuits).toEqual(suitsInDeck);
+    });
+
+    it('should have the 13 ranks', () => {
+      const expectedRanks = new Set([
+        'Ace',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        'Jack',
+        'King',
+        'Queen'
+      ]);
+      const ranksInDeck = _propSetInDeck(deck.cards, 'rank', 13);
+
+      expect(expectedRanks).toEqual(ranksInDeck);
+    });
+
+    it('should have a range of values 1..13', () => {
+      const expectedRange = [1, 13];
+      function _getRange(cards) {
+        let low = Infinity;
+        let high = -Infinity;
+        for (const card of cards) {
+          if (card.value < low) low = card.value;
+          if (card.value > high) high = card.value;
+        }
+        return [low, high];
+      }
+
+      expect(expectedRange).toEqual(_getRange(deck.cards));
+    });
+  });
+
+  describe('When the deck is shuffled', () => {
+    const prevCards = deck.cards.slice();
+    deck.shuffle();
+
+    it('should have the same length of the previous deck of cards.', () => {
+      expect(deck.cards.length).toEqual(prevCards.length);
+    });
+
+    it('should return a permutation of the previous deck of cards.', () => {
+      const firstCard = deck.cards[0];
+      const middleCard = deck.cards[Math.floor(deck.length / 2)];
+      const lastCard = deck.cards[deck.length - 1];
+
+      expect(firstCard).not.toBe(prevCards[0]);
+      expect(middleCard).not.toBe(prevCards[Math.floor(prevCards.length / 2)]);
+      expect(lastCard).not.toBe(prevCards[prevCards.length - 1]);
+    });
   });
 });

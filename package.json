@@ -5,7 +5,8 @@
   "main": "deck.js",
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watchAll"
+    "test:watch": "jest --watchAll",
+    "test:watch:v": "jest --watchAll --verbose"
   },
   "repository": {
     "type": "git",
