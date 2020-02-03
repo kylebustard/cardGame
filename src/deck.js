@@ -50,4 +50,22 @@ module.exports = class Deck {
       [cards[cardsRemaining], cards[i]] = [cards[i], cards[cardsRemaining]];
     }
   }
+
+  cut() {
+    const cards = this.cards;
+    const middleIdx = Math.floor(cards.length / 2);
+    const topHalf = cards.splice(0, middleIdx);
+    cards.push(topHalf);
+  }
+
+  deal(numberOfPlayers) {
+    const cards = this.cards;
+    return _dealHand(numberOfPlayers, cards);
+  }
+
+  _dealHand(numberOfPlayers, cards) {
+    while (cards.length) {
+      _batchCards(numberOfPlayers, cards);
+    }
+  }
 };
